@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # profile_flutter
 
 A new Flutter project.
@@ -14,3 +15,7 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+=======
+# portfolio_flutter
+Flutter portfolio 
+>>>>>>> 8b4c6a0182fb72ea1e48cd797ce8e74c72da4e70

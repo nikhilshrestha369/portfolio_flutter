@@ -25,21 +25,30 @@ class ContactInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isClickable = url != null;
     return GestureDetector(
-        onTap: url != null ? _launchURL : null,
+        onTap: isClickable ? _launchURL : null,
         child: MouseRegion( // For web, show pointer cursor
-          cursor: url != null ? SystemMouseCursors.click : SystemMouseCursors.basic,
-          child: Row(
-            children: [
-              Icon(icon, color: Colors.blue.shade700, size: 18),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(text, style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  decoration: url != null ? TextDecoration.underline : TextDecoration.none,
-                  color: url != null ? Colors.blue.shade700 : null,
-                )),
-              ),
-            ],
+          cursor: isClickable ? SystemMouseCursors.click : SystemMouseCursors.basic,
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+            decoration: isClickable ? BoxDecoration(
+              color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(30),
+            ) : null,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(icon, color: Theme.of(context).colorScheme.primary, size: 20),
+                const SizedBox(width: 12),
+                Flexible(
+                  child: Text(text, style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: isClickable ? Theme.of(context).colorScheme.primary : null,
+                    fontWeight: isClickable ? FontWeight.w600 : FontWeight.normal,
+                  )),
+                ),
+              ],
+            ),
           ),
         )
     );
@@ -54,26 +63,56 @@ class ExperienceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Card(
-      elevation: 2,
+      elevation: 0,
       margin: const EdgeInsets.only(bottom: 24.0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: Colors.grey.shade200),
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(job.period, style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold, color: Colors.grey.shade600)),
-            const SizedBox(height: 4),
-            Text(job.title, style: textTheme.titleLarge?.copyWith(color: Colors.blue.shade800)),
-            const SizedBox(height: 4),
-            Text('${job.company}, ${job.location}', style: textTheme.bodyLarge?.copyWith(fontStyle: FontStyle.italic)),
-            const SizedBox(height: 12),
+            Row(
+              children: [
+                Container(
+                  width: 4,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(job.title, style: textTheme.titleLarge?.copyWith(color: Theme.of(context).colorScheme.primary)),
+                      Text('${job.company}, ${job.location}', style: textTheme.bodyMedium),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade100,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(job.period, style: textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold)),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
             ...job.responsibilities.map((r) => Padding(
               padding: const EdgeInsets.only(bottom: 8.0, left: 16.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('• ', style: TextStyle(fontSize: 16, color: Colors.blue)),
+                  Icon(Icons.check_circle_outline, size: 16, color: Theme.of(context).colorScheme.secondary),
+                  const SizedBox(width: 8),
                   Expanded(child: Text(r, style: textTheme.bodyLarge)),
                 ],
               ),
@@ -94,14 +133,22 @@ class SkillBar extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(skill.name, style: Theme.of(context).textTheme.bodyLarge),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(skill.name, style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600)),
+            Text('${(skill.progress * 100).toInt()}%', style: Theme.of(context).textTheme.bodySmall),
+          ],
+        ),
         const SizedBox(height: 4),
-        LinearProgressIndicator(
-          value: skill.progress,
-          backgroundColor: Colors.grey.shade300,
-          color: Colors.blue.shade700,
-          minHeight: 8,
+        ClipRRect(
           borderRadius: BorderRadius.circular(4),
+          child: LinearProgressIndicator(
+            value: skill.progress,
+            backgroundColor: Colors.grey.shade200,
+            color: Theme.of(context).colorScheme.primary,
+            minHeight: 10,
+          ),
         ),
         const SizedBox(height: 8), // Spacing between skill bars
       ],
@@ -117,21 +164,117 @@ class EducationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Card(
-      elevation: 1,
+      elevation: 0,
+      color: Colors.transparent, // Transparent to blend with background if needed
       margin: const EdgeInsets.only(bottom: 16.0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+          side: BorderSide(color: Colors.grey.shade300)
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
           children: [
-            Text(education.period, style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold, color: Colors.grey.shade600)),
-            const SizedBox(height: 4),
-            Text(education.degree, style: textTheme.titleLarge?.copyWith(fontSize: 18, color: Colors.blue.shade800)),
-            const SizedBox(height: 2),
-            Text(education.institution, style: textTheme.bodyLarge),
+            CircleAvatar(
+              backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+              child: Icon(Icons.school, color: Theme.of(context).colorScheme.primary),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(education.degree, style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+                  Text(education.institution, style: textTheme.bodyMedium),
+                ],
+              ),
+            ),
+            Text(education.period, style: textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold, color: Colors.grey)),
           ],
         ),
+      ),
+    );
+  }
+}
+
+// --- CHAT BOT WIDGET ---
+
+class ChatBotSheet extends StatelessWidget {
+  const ChatBotSheet({super.key});
+
+  void _openMail() async {
+    final Uri emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: 'linkinshrestha@gmail.com',
+      query: 'subject=Inquiry from Portfolio&body=Hi Nikhil, I saw your portfolio and...',
+    );
+    if (await canLaunchUrl(emailLaunchUri)) {
+      await launchUrl(emailLaunchUri);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(height: 8),
+          Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(2))),
+          const SizedBox(height: 24),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CircleAvatar(
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                child: const Icon(Icons.smart_toy, color: Colors.white),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade100,
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(16),
+                      bottomLeft: Radius.circular(16),
+                      bottomRight: Radius.circular(16),
+                    ),
+                  ),
+                  child: const Text("Hello! I'm Nikhil's virtual assistant. I can help you get in touch or answer questions about his work."),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          Wrap(
+            spacing: 12,
+            children: [
+              ActionChip(
+                avatar: const Icon(Icons.email_outlined, size: 18),
+                label: const Text("Send an Email"),
+                onPressed: _openMail,
+              ),
+              ActionChip(
+                avatar: const Icon(Icons.copy, size: 18),
+                label: const Text("Copy Phone"),
+                onPressed: () {
+                  // Simulating copy
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Phone number 9841466133 copied to clipboard!")),
+                  );
+                },
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+        ],
       ),
     );
   }

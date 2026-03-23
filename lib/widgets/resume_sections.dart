@@ -10,23 +10,38 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.white, Theme.of(context).colorScheme.primaryContainer.withOpacity(0.2)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.white, width: 2),
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 4)),
+        ],
+      ),
+      child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Center(
+        Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.white, width: 4),
+            boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 8)],
+          ),
           child: CircleAvatar(
             radius: 60,
-            backgroundColor: Colors.blue.shade100, // Fallback background color
+            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
             child: ClipOval(
-              child: Icon(Icons.person, size: 80, color: Colors.blue.shade700),
+              child: Icon(Icons.person, size: 80, color: Theme.of(context).colorScheme.primary),
               // Image.asset(
               //   'assets/profile.jpg',
-              //   width: 120,
-              //   height: 120,
-              //   fit: BoxFit.cover,
-              //   errorBuilder: (context, error, stackTrace) {
-              //     return Icon(Icons.person, size: 80, color: Colors.blue.shade700); // Fallback icon
-              //   },
+              //   ...
               // ),
             ),
           ),
@@ -34,32 +49,38 @@ class Header extends StatelessWidget {
         const SizedBox(height: 24),
         Text(
           'Nikhil Shrestha',
-          style: textTheme.displayMedium?.copyWith(fontSize: 40),
+          style: textTheme.displayMedium,
+          textAlign: TextAlign.center,
         ),
         const SizedBox(height: 8),
         Text(
           'Flutter Developer',
-          style: textTheme.headlineSmall?.copyWith(color: Colors.blue.shade700),
+          style: textTheme.headlineSmall?.copyWith(color: Theme.of(context).colorScheme.primary),
         ),
-        const SizedBox(height: 16),
-        const ContactInfo(
+        const SizedBox(height: 24),
+        const Wrap(
+          spacing: 12,
+          runSpacing: 12,
+          alignment: WrapAlignment.center,
+          children: [
+          ContactInfo(
           icon: Icons.location_on,
           text: 'Gatthaghar, Madhyapur, Thimi, Nepal',
-          // No URL for location directly, unless it's a map link
         ),
-        const SizedBox(height: 8),
-        const ContactInfo(
+        ContactInfo(
           icon: Icons.phone,
           text: '9841466133',
           url: 'tel:+9779841466133', // Make phone number clickable
         ),
-        const SizedBox(height: 8),
-        const ContactInfo(
+        ContactInfo(
           icon: Icons.email,
           text: 'linkinshrestha@gmail.com',
           url: 'mailto:linkinshrestha@gmail.com', // Make email clickable
         ),
+          ],
+        ),
       ],
+      )
     );
   }
 }
@@ -107,7 +128,13 @@ class SkillsSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('SKILLS', style: Theme.of(context).textTheme.headlineSmall),
+        Row(
+          children: [
+            Icon(Icons.bolt, color: Theme.of(context).colorScheme.secondary),
+            const SizedBox(width: 8),
+            Text('SKILLS', style: Theme.of(context).textTheme.headlineSmall),
+          ],
+        ),
         const SizedBox(height: 16),
         Column( // Changed from Wrap to Column for LinearProgressIndicator
           children: skills.map((skill) => SkillBar(skill: skill)).toList(),
