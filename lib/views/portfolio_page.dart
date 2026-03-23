@@ -12,24 +12,10 @@ class PortfolioPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
       // Add a nice background using Stack
       body: Stack(
         children: [
-          // Background Gradient
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Theme.of(context).colorScheme.surface,
-                  Theme.of(context).brightness == Brightness.dark
-                      ? const Color(0xFF020617) 
-                      : Colors.white,
-                ],
-              ),
-            ),
-          ),
           // Main Content
           LayoutBuilder(
             builder: (context, constraints) {
@@ -46,10 +32,10 @@ class PortfolioPage extends StatelessWidget {
             right: 24,
             child: Consumer<ThemeController>(
               builder: (context, controller, child) {
-                return IconButton.filledTonal(
+                return IconButton(
                   onPressed: () => controller.toggleTheme(),
                   icon: Icon(
-                    controller.isDarkMode ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
+                    controller.isDark(context) ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
                   ),
                 );
               },
@@ -68,8 +54,8 @@ class PortfolioPage extends StatelessWidget {
         },
         icon: const Icon(Icons.chat_bubble_outline),
         label: const Text("Assistant"),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.onSurface,
+        foregroundColor: Theme.of(context).colorScheme.surface,
       ),
     );
   }
@@ -137,7 +123,7 @@ class SidePanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).cardTheme.color?.withOpacity(0.5), // Theme aware background
+      color: Theme.of(context).colorScheme.surfaceContainer,
       child: const SingleChildScrollView(
         padding: EdgeInsets.all(24.0),
         child: Column(

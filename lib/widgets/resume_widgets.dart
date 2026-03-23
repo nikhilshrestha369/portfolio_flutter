@@ -35,17 +35,17 @@ class ContactInfo extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
             decoration: isClickable ? BoxDecoration(
-              color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.1),
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
               borderRadius: BorderRadius.circular(30),
             ) : null,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(icon, color: Theme.of(context).colorScheme.primary, size: 20),
+                Icon(icon, color: Theme.of(context).colorScheme.onSurface, size: 20),
                 const SizedBox(width: 12),
                 Flexible(
                   child: Text(text, style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: isClickable ? Theme.of(context).colorScheme.primary : null,
+                    color: isClickable ? Theme.of(context).colorScheme.onSurface : null,
                     fontWeight: isClickable ? FontWeight.w600 : FontWeight.normal,
                   )),
                 ),
@@ -83,7 +83,7 @@ class ExperienceCard extends StatelessWidget {
                   width: 4,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
+                    color: Theme.of(context).colorScheme.onSurface,
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
@@ -92,7 +92,7 @@ class ExperienceCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(job.title, style: textTheme.titleLarge?.copyWith(color: Theme.of(context).colorScheme.primary)),
+                      Text(job.title, style: textTheme.titleLarge?.copyWith(color: Theme.of(context).colorScheme.onSurface)),
                       Text('${job.company}, ${job.location}', style: textTheme.bodyMedium),
                     ],
                   ),
@@ -100,7 +100,7 @@ class ExperienceCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surfaceContainerHighest.withOpacity(0.3),
+                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(job.period, style: textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold)),
@@ -113,7 +113,7 @@ class ExperienceCard extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.check_circle_outline, size: 16, color: Theme.of(context).colorScheme.secondary),
+                  Icon(Icons.check_circle_outline, size: 16, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
                   const SizedBox(width: 8),
                   Expanded(child: Text(r, style: textTheme.bodyLarge)),
                 ],
@@ -148,7 +148,7 @@ class SkillBar extends StatelessWidget {
           child: LinearProgressIndicator(
             value: skill.progress,
             backgroundColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
-            color: Theme.of(context).colorScheme.primary,
+            color: Theme.of(context).colorScheme.onSurface,
             minHeight: 10,
           ),
         ),
@@ -178,8 +178,8 @@ class EducationItem extends StatelessWidget {
         child: Row(
           children: [
             CircleAvatar(
-              backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-              child: Icon(Icons.school, color: Theme.of(context).colorScheme.primary),
+              backgroundColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
+              child: Icon(Icons.school, color: Theme.of(context).colorScheme.onSurface),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -221,10 +221,10 @@ class ProjectCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: colorScheme.primaryContainer.withOpacity(0.3),
+                color: colorScheme.onSurface.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(Icons.code, color: colorScheme.primary),
+              child: Icon(Icons.code, color: colorScheme.onSurface),
             ),
             const SizedBox(height: 16),
             Text(project.title, style: Theme.of(context).textTheme.titleLarge),
@@ -242,10 +242,10 @@ class ProjectCard extends StatelessWidget {
               children: project.technologies.map((tech) => Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: colorScheme.surfaceContainerHighest,
+                  color: colorScheme.onSurface.withOpacity(0.05),
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Text(tech, style: TextStyle(fontSize: 12, color: colorScheme.onSurfaceVariant)),
+                child: Text(tech, style: TextStyle(fontSize: 12, color: colorScheme.onSurface)),
               )).toList(),
             ),
           ],
@@ -273,7 +273,7 @@ class TestimonialCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(Icons.format_quote, color: Theme.of(context).colorScheme.tertiary, size: 32),
+            Icon(Icons.format_quote, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5), size: 32),
             const SizedBox(height: 12),
             Text(
               '"${testimonial.text}"',
@@ -407,8 +407,8 @@ class _ChatBotSheetState extends State<ChatBotSheet> {
             child: Row(
               children: [
                  CircleAvatar(
-                  backgroundColor: colorScheme.primaryContainer,
-                  child: Icon(Icons.smart_toy, color: colorScheme.primary),
+                  backgroundColor: colorScheme.onSurface.withOpacity(0.1),
+                  child: Icon(Icons.smart_toy, color: colorScheme.onSurface),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -418,7 +418,7 @@ class _ChatBotSheetState extends State<ChatBotSheet> {
                       Text("Virtual Assistant", style: Theme.of(context).textTheme.titleLarge),
                       Row(
                         children: [
-                          Container(width: 8, height: 8, decoration: const BoxDecoration(color: Colors.green, shape: BoxShape.circle)),
+                          Container(width: 8, height: 8, decoration: BoxDecoration(color: colorScheme.onSurface.withOpacity(0.6), shape: BoxShape.circle)),
                           const SizedBox(width: 6),
                           Text(_isTyping ? "Typing..." : "Online", style: Theme.of(context).textTheme.bodySmall),
                         ],
@@ -448,7 +448,7 @@ class _ChatBotSheetState extends State<ChatBotSheet> {
                         color: Theme.of(context).cardTheme.color,
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      child: SizedBox(width: 24, height: 10, child: LinearProgressIndicator(minHeight: 2, color: colorScheme.primary)),
+                      child: SizedBox(width: 24, height: 10, child: LinearProgressIndicator(minHeight: 2, color: colorScheme.onSurface)),
                     ),
                   );
                 }
@@ -464,8 +464,8 @@ class _ChatBotSheetState extends State<ChatBotSheet> {
                       if (!isUser) ...[
                          CircleAvatar(
                           radius: 16,
-                          backgroundColor: colorScheme.primary,
-                          child: const Icon(Icons.smart_toy, size: 18, color: Colors.white),
+                          backgroundColor: colorScheme.onSurface,
+                          child: Icon(Icons.smart_toy, size: 18, color: colorScheme.surface),
                         ),
                         const SizedBox(width: 12),
                       ],
@@ -473,7 +473,7 @@ class _ChatBotSheetState extends State<ChatBotSheet> {
                         child: Container(
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: isUser ? colorScheme.primary : Theme.of(context).cardTheme.color,
+                            color: isUser ? colorScheme.onSurface : Theme.of(context).cardTheme.color,
                             borderRadius: BorderRadius.only(
                               topLeft: const Radius.circular(20),
                               topRight: const Radius.circular(20),
@@ -484,7 +484,7 @@ class _ChatBotSheetState extends State<ChatBotSheet> {
                           ),
                           child: Text(
                             msg['text'],
-                            style: TextStyle(color: isUser ? Colors.white : Theme.of(context).textTheme.bodyMedium?.color, fontSize: 15),
+                            style: TextStyle(color: isUser ? colorScheme.surface : Theme.of(context).textTheme.bodyMedium?.color, fontSize: 15),
                           ),
                         ),
                       ),

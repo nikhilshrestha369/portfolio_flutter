@@ -17,9 +17,9 @@ class Header extends StatelessWidget {
         Center(
           child: CircleAvatar(
             radius: 60,
-            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+            backgroundColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
             child: ClipOval(
-              child: Icon(Icons.person, size: 80, color: Theme.of(context).colorScheme.primary),
+              child: Icon(Icons.person, size: 80, color: Theme.of(context).colorScheme.onSurface),
               // Image.asset(
               //   'assets/profile.jpg',
               //   width: 120,
@@ -40,7 +40,7 @@ class Header extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           'Flutter Developer',
-          style: textTheme.headlineSmall?.copyWith(color: Theme.of(context).colorScheme.primary),
+          style: textTheme.headlineSmall?.copyWith(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
         ),
         const SizedBox(height: 16),
         const ContactInfo(
@@ -194,7 +194,7 @@ class GetInTouchSection extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.2),
+        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -204,6 +204,10 @@ class GetInTouchSection extends StatelessWidget {
           const Text("Have a project in mind or want to hire me? I'm just a click away."),
           const SizedBox(height: 24),
           FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.onSurface,
+              foregroundColor: Theme.of(context).colorScheme.surface,
+            ),
             onPressed: () async {
               final Uri url = Uri.parse('mailto:linkinshrestha@gmail.com');
               if (await canLaunchUrl(url)) await launchUrl(url);
