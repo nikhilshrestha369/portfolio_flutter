@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:profile_flutter/widgets/resume_widgets.dart';
+import '../controllers/theme_controller.dart';
 
 import '../widgets/resume_sections.dart';
 
@@ -20,8 +22,10 @@ class PortfolioPage extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Theme.of(context).colorScheme.background,
-                  Colors.white,
+                  Theme.of(context).colorScheme.surface,
+                  Theme.of(context).brightness == Brightness.dark
+                      ? const Color(0xFF020617) 
+                      : Colors.white,
                 ],
               ),
             ),
@@ -35,6 +39,21 @@ class PortfolioPage extends StatelessWidget {
                 return const MobileView();
               }
             },
+          ),
+          // Theme Toggle positioned at top right
+          Positioned(
+            top: 24,
+            right: 24,
+            child: Consumer<ThemeController>(
+              builder: (context, controller, child) {
+                return IconButton.filledTonal(
+                  onPressed: () => controller.toggleTheme(),
+                  icon: Icon(
+                    controller.isDarkMode ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),
@@ -118,7 +137,7 @@ class SidePanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black.withOpacity(0.8), // Semi-transparent
+      color: Theme.of(context).cardTheme.color?.withOpacity(0.5), // Theme aware background
       child: const SingleChildScrollView(
         padding: EdgeInsets.all(24.0),
         child: Column(

@@ -17,9 +17,9 @@ class Header extends StatelessWidget {
         Center(
           child: CircleAvatar(
             radius: 60,
-            backgroundColor: Colors.blue.shade100, // Fallback background color
+            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
             child: ClipOval(
-              child: Icon(Icons.person, size: 80, color: Colors.blue.shade700),
+              child: Icon(Icons.person, size: 80, color: Theme.of(context).colorScheme.primary),
               // Image.asset(
               //   'assets/profile.jpg',
               //   width: 120,
@@ -40,7 +40,7 @@ class Header extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           'Flutter Developer',
-          style: textTheme.headlineSmall?.copyWith(color: Colors.blue.shade700),
+          style: textTheme.headlineSmall?.copyWith(color: Theme.of(context).colorScheme.primary),
         ),
         const SizedBox(height: 16),
         const ContactInfo(

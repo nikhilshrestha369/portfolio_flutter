@@ -390,9 +390,9 @@ class _ChatBotSheetState extends State<ChatBotSheet> {
     
     return Container(
       height: MediaQuery.of(context).size.height * 0.85, // 85% of screen height
-      decoration: const BoxDecoration(
-        color: Color(0xFFF8FAFC), // Keep ChatBot light specific for now or adapt
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
       ),
       child: Column(
         children: [
@@ -400,7 +400,7 @@ class _ChatBotSheetState extends State<ChatBotSheet> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
               boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10)],
             ),
@@ -445,10 +445,10 @@ class _ChatBotSheetState extends State<ChatBotSheet> {
                       margin: const EdgeInsets.only(bottom: 12, left: 44),
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).cardTheme.color,
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      child: const SizedBox(width: 24, height: 10, child: LinearProgressIndicator(minHeight: 2)),
+                      child: SizedBox(width: 24, height: 10, child: LinearProgressIndicator(minHeight: 2, color: colorScheme.primary)),
                     ),
                   );
                 }
@@ -473,18 +473,18 @@ class _ChatBotSheetState extends State<ChatBotSheet> {
                         child: Container(
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: isUser ? colorScheme.primary : Colors.white,
+                            color: isUser ? colorScheme.primary : Theme.of(context).cardTheme.color,
                             borderRadius: BorderRadius.only(
                               topLeft: const Radius.circular(20),
                               topRight: const Radius.circular(20),
                               bottomLeft: isUser ? const Radius.circular(20) : Radius.zero,
                               bottomRight: isUser ? Radius.zero : const Radius.circular(20),
                             ),
-                            boxShadow: isUser ? null : [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 4, offset: const Offset(0, 2))],
+                            border: !isUser ? Border.all(color: Theme.of(context).dividerColor.withOpacity(0.1)) : null,
                           ),
                           child: Text(
                             msg['text'],
-                            style: TextStyle(color: isUser ? Colors.white : Colors.black87, fontSize: 15),
+                            style: TextStyle(color: isUser ? Colors.white : Theme.of(context).textTheme.bodyMedium?.color, fontSize: 15),
                           ),
                         ),
                       ),
@@ -498,7 +498,10 @@ class _ChatBotSheetState extends State<ChatBotSheet> {
           // --- Suggestion Chips ---
           Container(
             padding: const EdgeInsets.all(16),
-            decoration: const BoxDecoration(color: Colors.white, border: Border(top: BorderSide(color: Colors.black12))),
+            decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                border: Border(top: BorderSide(color: Theme.of(context).dividerColor.withOpacity(0.1)))
+            ),
             child: SizedBox(
               height: 40,
               child: ListView.separated(
@@ -508,9 +511,9 @@ class _ChatBotSheetState extends State<ChatBotSheet> {
                 itemBuilder: (context, index) {
                   return ActionChip(
                     label: Text(_faqs[index]['topic']!),
-                    backgroundColor: colorScheme.surface,
+                    backgroundColor: Theme.of(context).cardTheme.color,
                     elevation: 1,
-                    side: BorderSide(color: Colors.grey.shade200),
+                    side: BorderSide(color: Theme.of(context).dividerColor.withOpacity(0.2)),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                     onPressed: () => _handleOptionSelected(index),
                   );
