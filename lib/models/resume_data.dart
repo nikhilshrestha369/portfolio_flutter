@@ -35,6 +35,32 @@ class Skill {
   const Skill({required this.name, required this.progress});
 }
 
+class Project {
+  final String title;
+  final String description;
+  final List<String> technologies;
+  final String? link;
+
+  const Project({
+    required this.title,
+    required this.description,
+    required this.technologies,
+    this.link,
+  });
+}
+
+class Testimonial {
+  final String name;
+  final String role;
+  final String text;
+
+  const Testimonial({
+    required this.name,
+    required this.role,
+    required this.text,
+  });
+}
+
 final List<Job> employmentHistory = [
   Job(
     period: 'Apr 2024 — Present',
@@ -142,4 +168,45 @@ final List<Skill> skills = [
   Skill(name: 'Java', progress: _getLevelProgress('Experienced')),
   Skill(name: 'Python, Django', progress: _getLevelProgress('Skillful')),
   Skill(name: 'Node.js', progress: _getLevelProgress('Experienced')),
+];
+
+final List<Project> recentProjects = [
+  Project(
+    title: 'POS & Billing System',
+    description: 'A comprehensive POS solution for retail with thermal printer integration via socket communication.',
+    technologies: ['Flutter', 'Socket.IO', 'Thermal Printer'],
+  ),
+  Project(
+    title: 'News Portal App',
+    description: 'Real-time news application with category filtering, breaking news push notifications, and offline reading.',
+    technologies: ['Flutter', 'Firebase', 'REST API'],
+  ),
+  Project(
+    title: 'Short Video Platform',
+    description: 'TikTok-style video scrolling app with social features like likes, comments, and real-time chat.',
+    technologies: ['Flutter', 'Video Player', 'Socket.IO'],
+  ),
+  Project(
+    title: 'E-commerce App',
+    description: 'Full-featured shopping app with cart, payment gateway integration, and order tracking.',
+    technologies: ['Flutter', 'GetX', 'Stripe'],
+  ),
+];
+
+final List<Testimonial> testimonials = [
+  Testimonial(
+    name: 'Amit Sharma',
+    role: 'Project Manager, Prixa',
+    text: 'Nikhil is an exceptional Flutter developer. His ability to handle complex hardware integrations like thermal printers is impressive.',
+  ),
+  Testimonial(
+    name: 'Sarah Jenkins',
+    role: 'Client',
+    text: 'Delivered our e-commerce app ahead of schedule. The UI is buttery smooth and the code is very clean.',
+  ),
+  Testimonial(
+    name: 'Rajesh K.C.',
+    role: 'Senior Dev, Nectar Digit',
+    text: 'Great team player with deep knowledge of state management. Always willing to go the extra mile.',
+  ),
 ];

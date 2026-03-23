@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../widgets/resume_sections.dart';
-import '../widgets/resume_widgets.dart'; // Import for ChatBotSheet
+import 'package:profile_flutter/widgets/resume_widgets.dart';
+
+import '../widgets/resume_sections.dart';
 
 // The main portfolio page, which is responsive
 class PortfolioPage extends StatelessWidget {
@@ -96,6 +97,12 @@ class MobileView extends StatelessWidget {
             SkillsSection(),
             SizedBox(height: 32),
             EducationSection(),
+            SizedBox(height: 32),
+            RecentWorkSection(),
+            SizedBox(height: 32),
+            TestimonialsSection(),
+            SizedBox(height: 32),
+            GetInTouchSection(),
           ],
         ),
       ),
@@ -111,7 +118,7 @@ class SidePanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white.withOpacity(0.8), // Semi-transparent
+      color: Colors.black.withOpacity(0.8), // Semi-transparent
       child: const SingleChildScrollView(
         padding: EdgeInsets.all(24.0),
         child: Column(
@@ -122,6 +129,8 @@ class SidePanel extends StatelessWidget {
             SkillsSection(),
             SizedBox(height: 40),
             EducationSection(),
+            SizedBox(height: 40),
+            TestimonialsSection(),
           ],
         ),
       ),
@@ -142,6 +151,10 @@ class MainContent extends StatelessWidget {
           ProfileSection(),
           SizedBox(height: 40),
           ExperienceSection(),
+          SizedBox(height: 40),
+          RecentWorkSection(),
+          SizedBox(height: 40),
+          GetInTouchSection(),
         ],
       ),
     );

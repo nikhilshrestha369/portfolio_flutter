@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:profile_flutter/models/resume_data.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../models/resume_data.dart';
+// import '../../models/resume_data.dart' hide Education, Job;
 
 // --- CUSTOM WIDGETS ---
 
@@ -66,10 +67,10 @@ class ExperienceCard extends StatelessWidget {
     return Card(
       elevation: 0,
       margin: const EdgeInsets.only(bottom: 24.0),
-      color: Colors.white,
+      color: Theme.of(context).cardTheme.color,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
-        side: BorderSide(color: Colors.grey.shade200),
+        side: BorderSide(color: Theme.of(context).dividerColor.withOpacity(0.1)),
       ),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -99,7 +100,7 @@ class ExperienceCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade100,
+                    color: Theme.of(context).colorScheme.surfaceContainerHighest.withOpacity(0.3),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(job.period, style: textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold)),
@@ -146,7 +147,7 @@ class SkillBar extends StatelessWidget {
           borderRadius: BorderRadius.circular(4),
           child: LinearProgressIndicator(
             value: skill.progress,
-            backgroundColor: Colors.grey.shade200,
+            backgroundColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
             color: Theme.of(context).colorScheme.primary,
             minHeight: 10,
           ),
@@ -170,7 +171,7 @@ class EducationItem extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16.0),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
-          side: BorderSide(color: Colors.grey.shade300)
+          side: BorderSide(color: Theme.of(context).dividerColor.withOpacity(0.2))
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -191,6 +192,96 @@ class EducationItem extends StatelessWidget {
               ),
             ),
             Text(education.period, style: textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold, color: Colors.grey)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ProjectCard extends StatelessWidget {
+  final Project project;
+  const ProjectCard({super.key, required this.project});
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Card(
+      elevation: 0,
+      color: Theme.of(context).cardTheme.color,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: Theme.of(context).dividerColor.withOpacity(0.1)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: colorScheme.primaryContainer.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(Icons.code, color: colorScheme.primary),
+            ),
+            const SizedBox(height: 16),
+            Text(project.title, style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: 8),
+            Text(
+              project.description,
+              style: Theme.of(context).textTheme.bodyMedium,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 16),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: project.technologies.map((tech) => Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: colorScheme.surfaceContainerHighest,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(tech, style: TextStyle(fontSize: 12, color: colorScheme.onSurfaceVariant)),
+              )).toList(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class TestimonialCard extends StatelessWidget {
+  final Testimonial testimonial;
+  const TestimonialCard({super.key, required this.testimonial});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 0,
+      color: Theme.of(context).cardTheme.color,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: Theme.of(context).dividerColor.withOpacity(0.1)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(Icons.format_quote, color: Theme.of(context).colorScheme.tertiary, size: 32),
+            const SizedBox(height: 12),
+            Text(
+              '"${testimonial.text}"',
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontStyle: FontStyle.italic),
+            ),
+            const SizedBox(height: 16),
+            Text(testimonial.name, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold)),
+            Text(testimonial.role, style: Theme.of(context).textTheme.bodySmall),
           ],
         ),
       ),
@@ -300,7 +391,7 @@ class _ChatBotSheetState extends State<ChatBotSheet> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.85, // 85% of screen height
       decoration: const BoxDecoration(
-        color: Color(0xFFF8FAFC),
+        color: Color(0xFFF8FAFC), // Keep ChatBot light specific for now or adapt
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
       child: Column(
