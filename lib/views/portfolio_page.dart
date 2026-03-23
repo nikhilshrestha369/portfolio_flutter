@@ -41,6 +41,7 @@ class PortfolioPage extends StatelessWidget {
         onPressed: () {
           showModalBottomSheet(
             context: context,
+            isScrollControlled: true, // Allows the sheet to take up more height
             backgroundColor: Colors.transparent,
             builder: (context) => const ChatBotSheet(),
           );
