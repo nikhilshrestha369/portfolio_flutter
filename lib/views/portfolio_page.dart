@@ -17,16 +17,8 @@ class PortfolioPage extends StatelessWidget {
       body: Stack(
         children: [
           // Main Content
-          LayoutBuilder(
-            builder: (context, constraints) {
-              if (constraints.maxWidth > 900) {
-                return const DesktopView();
-              } else {
-                return const MobileView();
-              }
-            },
-          ),
-          // Theme Toggle positioned at top right
+          const MobileView(),
+      
           Positioned(
             top: 24,
             right: 24,
@@ -62,26 +54,6 @@ class PortfolioPage extends StatelessWidget {
 }
 
 // --- RESPONSIVE LAYOUTS ---
-
-class DesktopView extends StatelessWidget {
-  const DesktopView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Row(
-      children: [
-        SizedBox(
-          width: 350,
-          child: SidePanel(),
-        ),
-        Expanded(
-          child: MainContent(),
-        ),
-      ],
-    );
-  }
-}
-
 class MobileView extends StatelessWidget {
   const MobileView({super.key});
 
@@ -134,8 +106,7 @@ class SidePanel extends StatelessWidget {
             SkillsSection(),
             SizedBox(height: 40),
             EducationSection(),
-            SizedBox(height: 40),
-            TestimonialsSection(),
+           
           ],
         ),
       ),
@@ -158,6 +129,8 @@ class MainContent extends StatelessWidget {
           ExperienceSection(),
           SizedBox(height: 40),
           RecentWorkSection(),
+          SizedBox(height: 40),
+           TestimonialsSection(),
           SizedBox(height: 40),
           GetInTouchSection(),
         ],

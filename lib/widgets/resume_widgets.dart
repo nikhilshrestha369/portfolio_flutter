@@ -201,87 +201,108 @@ class EducationItem extends StatelessWidget {
 
 class ProjectCard extends StatelessWidget {
   final Project project;
+
   const ProjectCard({super.key, required this.project});
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    return Card(
-      elevation: 0,
-      color: Theme.of(context).cardTheme.color,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: Theme.of(context).dividerColor.withOpacity(0.1)),
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFF111111),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: Colors.white.withOpacity(0.06)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.25),
+            blurRadius: 30,
+            offset: const Offset(0, 10),
+          ),
+        ],
       ),
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: colorScheme.onSurface.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(12),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(18),
+              child: AspectRatio(
+                aspectRatio: 1.45,
+                child: Icon(Icons.image)
               ),
-              child: Icon(Icons.code, color: colorScheme.onSurface),
             ),
-            const SizedBox(height: 16),
-            Text(project.title, style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 8),
-            Text(
-              project.description,
-              style: Theme.of(context).textTheme.bodyMedium,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ),
-            const SizedBox(height: 16),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: project.technologies.map((tech) => Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(
-                  color: colorScheme.onSurface.withOpacity(0.05),
-                  borderRadius: BorderRadius.circular(20),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                if (project.logo != null) ...[
+                  Container(
+                    width: 40,
+                    height: 40,
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Image.asset(project.logo!),
+                  ),
+                  const SizedBox(width: 12),
+                ],
+                Expanded(
+                  child: Text(
+                    project.title,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                  ),
                 ),
-                child: Text(tech, style: TextStyle(fontSize: 12, color: colorScheme.onSurface)),
-              )).toList(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class TestimonialCard extends StatelessWidget {
-  final Testimonial testimonial;
-  const TestimonialCard({super.key, required this.testimonial});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      color: Theme.of(context).cardTheme.color,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: Theme.of(context).dividerColor.withOpacity(0.1)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(Icons.format_quote, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5), size: 32),
-            const SizedBox(height: 12),
-            Text(
-              '"${testimonial.text}"',
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontStyle: FontStyle.italic),
+              ],
             ),
             const SizedBox(height: 16),
-            Text(testimonial.name, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold)),
-            Text(testimonial.role, style: Theme.of(context).textTheme.bodySmall),
+            RichText(
+              text: TextSpan(
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: Colors.white70,
+                      height: 1.7,
+                    ),
+                children: [
+                  TextSpan(text: project.description),
+                  const TextSpan(
+                    text: '  Read more',
+                    style: TextStyle(
+                      color: Colors.amber,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 18),
+            // Wrap(
+            //   spacing: 10,
+            //   runSpacing: 10,
+            //   children: project.tags.map((tag) {
+            //     return Container(
+            //       padding: const EdgeInsets.symmetric(
+            //         horizontal: 12,
+            //         vertical: 8,
+            //       ),
+            //       decoration: BoxDecoration(
+            //         color: Colors.white.withOpacity(0.05),
+            //         borderRadius: BorderRadius.circular(10),
+            //         border: Border.all(
+            //           color: Colors.white.withOpacity(0.08),
+            //         ),
+            //       ),
+            //       child: Text(
+            //         tag,
+            //         style: const TextStyle(
+            //           fontSize: 13,
+            //           fontWeight: FontWeight.w500,
+            //         ),
+            //       ),
+            //     );
+            //   }).toList(),
+            // ),
           ],
         ),
       ),
@@ -373,16 +394,16 @@ class _ChatBotSheetState extends State<ChatBotSheet> {
     });
   }
 
-  Future<void> _openMail() async {
-    final Uri emailLaunchUri = Uri(
-      scheme: 'mailto',
-      path: 'linkinshrestha@gmail.com',
-      query: 'subject=Inquiry from Portfolio&body=Hi Nikhil, I saw your portfolio and...',
-    );
-    if (await canLaunchUrl(emailLaunchUri)) {
-      await launchUrl(emailLaunchUri);
-    }
-  }
+  // Future<void> _openMail() async {
+  //   final Uri emailLaunchUri = Uri(
+  //     scheme: 'mailto',
+  //     path: 'lihkinshrestha@gmail.com',
+  //     query: 'subject=Inquiry from Portfolio&body=Hi Nikhil, I saw your portfolio and...',
+  //   );
+  //   if (await canLaunchUrl(emailLaunchUri)) {
+  //     await launchUrl(emailLaunchUri);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

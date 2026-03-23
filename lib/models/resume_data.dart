@@ -37,15 +37,28 @@ class Skill {
 
 class Project {
   final String title;
+  final String shortDescription;
   final String description;
+
+  final List<String> images; // multiple preview images
+  final String? logo; // app/company logo
+
   final List<String> technologies;
-  final String? link;
+
+  final String? playStoreLink;
+  final String? appStoreLink;
+  final String? websiteLink;
 
   const Project({
     required this.title,
+    required this.shortDescription,
     required this.description,
+    required this.images,
     required this.technologies,
-    this.link,
+    this.logo,
+    this.playStoreLink,
+    this.appStoreLink,
+    this.websiteLink,
   });
 }
 
@@ -173,23 +186,77 @@ final List<Skill> skills = [
 final List<Project> recentProjects = [
   Project(
     title: 'POS & Billing System',
-    description: 'A comprehensive POS solution for retail with thermal printer integration via socket communication.',
+    shortDescription: 'Retail POS with printer integration',
+    description:
+        'A comprehensive POS solution for retail businesses. Includes thermal printer integration using socket communication, real-time billing, and inventory tracking.',
+    images: [
+      'assets/projects/pos1.png',
+      'assets/projects/pos2.png',
+    ],
+    logo: 'assets/logos/pos.png',
     technologies: ['Flutter', 'Socket.IO', 'Thermal Printer'],
   ),
+
   Project(
     title: 'News Portal App',
-    description: 'Real-time news application with category filtering, breaking news push notifications, and offline reading.',
+    shortDescription: 'Real-time news with notifications',
+    description:
+        'A real-time news application featuring category filtering, breaking news push notifications, bookmarking, and offline reading support.',
+    images: [
+      'assets/projects/news1.png',
+      'assets/projects/news2.png',
+    ],
+    logo: 'assets/logos/news.png',
     technologies: ['Flutter', 'Firebase', 'REST API'],
   ),
+
   Project(
     title: 'Short Video Platform',
-    description: 'TikTok-style video scrolling app with social features like likes, comments, and real-time chat.',
+    shortDescription: 'TikTok-style social video app',
+    description:
+        'A vertical video scrolling platform with features like likes, comments, sharing, and real-time chat using WebSockets.',
+    images: [
+      'assets/projects/video1.png',
+      'assets/projects/video2.png',
+    ],
+    logo: 'assets/logos/video.png',
     technologies: ['Flutter', 'Video Player', 'Socket.IO'],
   ),
+
   Project(
     title: 'E-commerce App',
-    description: 'Full-featured shopping app with cart, payment gateway integration, and order tracking.',
+    shortDescription: 'Complete shopping experience',
+    description:
+        'A full-featured e-commerce app with cart management, Stripe payment integration, product search, and order tracking.',
+    images: [
+      'assets/projects/ecom1.png',
+      'assets/projects/ecom2.png',
+    ],
+    logo: 'assets/logos/ecom.png',
     technologies: ['Flutter', 'GetX', 'Stripe'],
+  ),
+
+  Project(
+    title: 'Koor',
+    shortDescription: 'Property buying & renting platform',
+    description:
+        'A property buying, selling, and renting platform for Gulf countries. Built with multilingual support, deep linking, maps integration, and offline-first architecture.',
+    images: [
+      'assets/projects/koor1.png',
+      'assets/projects/koor2.png',
+      'assets/projects/koor3.png',
+    ],
+    logo: 'assets/logos/koor.png',
+    technologies: [
+      'Flutter',
+      'Firebase',
+      'Google Maps',
+      'Deep Linking',
+      'Localization',
+      'AI Moderation',
+    ],
+    playStoreLink: 'https://play.google.com/',
+    appStoreLink: 'https://apps.apple.com/',
   ),
 ];
 
