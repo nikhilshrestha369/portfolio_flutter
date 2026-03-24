@@ -63,7 +63,7 @@ class MobileView extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Header(),
             SizedBox(height: 32),

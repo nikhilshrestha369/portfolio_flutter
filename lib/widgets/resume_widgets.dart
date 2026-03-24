@@ -6,6 +6,42 @@ import 'package:url_launcher/url_launcher.dart';
 
 // --- CUSTOM WIDGETS ---
 
+class HoverCard extends StatefulWidget {
+  final Widget child;
+  final VoidCallback? onTap;
+  const HoverCard({super.key, required this.child, this.onTap});
+
+  @override
+  State<HoverCard> createState() => _HoverCardState();
+}
+
+class _HoverCardState extends State<HoverCard> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      cursor: widget.onTap != null ? SystemMouseCursors.click : SystemMouseCursors.basic,
+      child: GestureDetector(
+        onTap: widget.onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeOut,
+          transform: Matrix4.identity()..scale(_isHovered ? 1.02 : 1.0),
+          decoration: BoxDecoration(
+            boxShadow: _isHovered
+                ? [BoxShadow(color: Theme.of(context).colorScheme.primary.withOpacity(0.1), blurRadius: 20, offset: const Offset(0, 5))]
+                : [],
+          ),
+          child: widget.child,
+        ),
+      ),
+    );
+  }
+}
+
 class ContactInfo extends StatelessWidget {
   final IconData icon;
   final String text;
@@ -64,58 +100,69 @@ class ExperienceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return Card(
-      elevation: 0,
-      margin: const EdgeInsets.only(bottom: 24.0),
-      color: Theme.of(context).cardTheme.color,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: BorderSide(color: Theme.of(context).dividerColor.withOpacity(0.1)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
+    
+    return HoverCard(
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 24.0),
+        padding: const EdgeInsets.all(24.0),
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardTheme.color?.withOpacity(0.5),
+          border: Border.all(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1)),
+          borderRadius: BorderRadius.circular(4), // Sharper corners
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: 4,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.onSurface,
-                    borderRadius: BorderRadius.circular(2),
+                Padding(
+                  padding: const EdgeInsets.only(top: 4.0),
+                  child: Icon(
+                    Icons.subdirectory_arrow_right, 
+                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+                    size: 20,
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: 16),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(job.title, style: textTheme.titleLarge?.copyWith(color: Theme.of(context).colorScheme.onSurface)),
-                      Text('${job.company}, ${job.location}', style: textTheme.bodyMedium),
+                      Text(job.title, style: textTheme.titleLarge?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurface,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: -0.5,
+                      )),
+                      const SizedBox(height: 4),
+                      Text('${job.company} • ${job.location}', 
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                          fontFamily: 'monospace',
+                        )
+                      ),
                     ],
                   ),
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.2)),
+                    borderRadius: BorderRadius.circular(4),
                   ),
-                  child: Text(job.period, style: textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold)),
+                  child: Text(job.period, style: textTheme.labelSmall?.copyWith(fontWeight: FontWeight.bold)),
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 24),
             ...job.responsibilities.map((r) => Padding(
               padding: const EdgeInsets.only(bottom: 8.0, left: 16.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.check_circle_outline, size: 16, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
+                  Text(">", style: TextStyle(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.bold)),
                   const SizedBox(width: 8),
-                  Expanded(child: Text(r, style: textTheme.bodyLarge)),
+                  Expanded(child: Text(r, style: textTheme.bodyMedium?.copyWith(height: 1.6))),
                 ],
               ),
             )).toList(),
@@ -206,14 +253,17 @@ class ProjectCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xFF111111),
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: Colors.white.withOpacity(0.06)),
-        boxShadow: [
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
+    return HoverCard(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardTheme.color,
+          borderRadius: BorderRadius.circular(8), // Less rounded
+          border: Border.all(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.08)),
+          boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.25),
+              color: Colors.black.withOpacity(0.05),
             blurRadius: 30,
             offset: const Offset(0, 10),
           ),
@@ -225,10 +275,13 @@ class ProjectCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(18),
+              borderRadius: BorderRadius.circular(4),
               child: AspectRatio(
                 aspectRatio: 1.45,
-                child: Icon(Icons.image)
+                child: Container(
+                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
+                  child: Icon(Icons.code, size: 48, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.2)),
+                ),
               ),
             ),
             const SizedBox(height: 20),
@@ -240,8 +293,9 @@ class ProjectCard extends StatelessWidget {
                     height: 40,
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
+                      color: Theme.of(context).colorScheme.surface,
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1)),
                     ),
                     child: Image.asset(project.logo!),
                   ),
@@ -261,15 +315,15 @@ class ProjectCard extends StatelessWidget {
             RichText(
               text: TextSpan(
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: Colors.white70,
+                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
                       height: 1.7,
                     ),
                 children: [
                   TextSpan(text: project.description),
-                  const TextSpan(
+                  TextSpan(
                     text: '  Read more',
                     style: TextStyle(
-                      color: Colors.amber,
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -306,7 +360,7 @@ class ProjectCard extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 }
 

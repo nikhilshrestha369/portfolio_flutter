@@ -1,5 +1,28 @@
 // --- DATA MODELS & DATA ---
 
+class PersonalInfo {
+  final String name;
+  final String role;
+  final String location;
+  final String phone;
+  final String email;
+  final String bio;
+  final String availabilityText;
+
+  const PersonalInfo({
+    required this.name,
+    required this.role,
+    required this.location,
+    required this.phone,
+    required this.email,
+    required this.bio,
+    required this.availabilityText,
+  });
+
+  String get phoneUrl => 'tel:$phone';
+  String get emailUrl => 'mailto:$email';
+}
+
 class Job {
   final String period;
   final String title;
@@ -73,6 +96,45 @@ class Testimonial {
     required this.text,
   });
 }
+
+const PersonalInfo personalInfo = PersonalInfo(
+  name: 'Nikhil Shrestha',
+  role: 'Flutter Developer',
+  location: 'Gatthaghar, Madhyapur, Thimi, Nepal',
+  phone: '9841466133',
+  email: 'linkinshrestha@gmail.com',
+  bio: 'Dynamic Mid-level Flutter Developer with over 3 years of experience in building cutting-edge, cross-platform mobile applications that drive user engagement and performance.',
+  availabilityText: "Have a project in mind or want to hire me? I'm just a click away.",
+);
+
+const Map<String, List<String>> skillGroups = {
+  'Languages': [
+    'Dart',
+    'JavaScript',
+    'Swift',
+    'PHP',
+    'Java',
+    'Python',
+  ],
+  'Frameworks & Tools': [
+    'Flutter',
+    'iOS',
+    'Android',
+    'Stripe',
+    'React',
+    'Laravel',
+    'PostgreSQL',
+  ],
+  'Others': [
+    'Play Store',
+    'GitHub',
+    'REST API',
+    'iOS Store',
+    'Linux',
+    'Docker',
+    'AWS',
+  ],
+};
 
 final List<Job> employmentHistory = [
   Job(

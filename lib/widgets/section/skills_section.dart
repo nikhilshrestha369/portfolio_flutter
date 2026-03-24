@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile_flutter/models/resume_data.dart';
 
 class SkillsSection extends StatelessWidget {
   const SkillsSection({super.key});
@@ -6,35 +7,6 @@ class SkillsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
-    const Map<String, List<String>> skillGroups = {
-      'Languages': [
-        'Dart',
-        'JavaScript',
-        'Swift',
-        'PHP',
-        'Java',
-        'Python',
-      ],
-      'Frameworks & Tools': [
-        'Flutter',
-        'iOS',
-        'Android',
-        'Stripe',
-        'React',
-        'Laravel',
-        'PostgreSQL',
-      ],
-      'Others': [
-        'Play Store',
-        'GitHub',
-        'REST API',
-        'iOS Store',
-        'Linux',
-        'Docker',
-        'AWS',
-      ],
-    };
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,19 +109,12 @@ class _SkillChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surface.withOpacity(0.03),
-        borderRadius: BorderRadius.circular(16),
+        color: theme.colorScheme.surface,
+        borderRadius: BorderRadius.circular(4),
         border: Border.all(
           color: theme.colorScheme.onSurface.withOpacity(0.12),
           width: 1,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.08),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

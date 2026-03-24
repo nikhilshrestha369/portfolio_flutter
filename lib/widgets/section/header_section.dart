@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profile_flutter/models/resume_data.dart';
 import 'package:profile_flutter/widgets/resume_widgets.dart';
 
 class Header extends StatelessWidget {
@@ -17,42 +18,48 @@ class Header extends StatelessWidget {
             backgroundColor:
                 Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
             child: ClipOval(
-              child: Icon(
-                Icons.person,
-                size: 80,
+              child: Container(
+                width: 120, height: 120,
                 color: Theme.of(context).colorScheme.onSurface,
+                child: Icon(Icons.person, size: 80, color: Theme.of(context).colorScheme.surface),
               ),
             ),
           ),
         ),
         const SizedBox(height: 24),
         Text(
-          'Nikhil Shrestha',
-          style: textTheme.displayMedium?.copyWith(fontSize: 40),
+          personalInfo.name.toUpperCase(),
+          style: textTheme.displayMedium?.copyWith(
+            fontSize: 40,
+            fontWeight: FontWeight.w900,
+            letterSpacing: -1,
+          ),
         ),
         const SizedBox(height: 8),
         Text(
-          'Flutter Developer',
+          personalInfo.role,
           style: textTheme.headlineSmall?.copyWith(
             color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+            fontFamily: 'monospace',
+            fontSize: 18,
           ),
         ),
         const SizedBox(height: 16),
-        const ContactInfo(
+        ContactInfo(
           icon: Icons.location_on,
-          text: 'Gatthaghar, Madhyapur, Thimi, Nepal',
+          text: personalInfo.location,
         ),
         const SizedBox(height: 8),
-        const ContactInfo(
+        ContactInfo(
           icon: Icons.phone,
-          text: '9841466133',
-          url: 'tel:+9779841466133',
+          text: personalInfo.phone,
+          url: personalInfo.phoneUrl,
         ),
         const SizedBox(height: 8),
-        const ContactInfo(
+        ContactInfo(
           icon: Icons.email,
-          text: 'linkinshrestha@gmail.com',
-          url: 'mailto:linkinshrestha@gmail.com',
+          text: personalInfo.email,
+          url: personalInfo.emailUrl,
         ),
       ],
     );
