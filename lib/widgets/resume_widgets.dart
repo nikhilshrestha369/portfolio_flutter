@@ -42,56 +42,7 @@ class _HoverCardState extends State<HoverCard> {
   }
 }
 
-class ContactInfo extends StatelessWidget {
-  final IconData icon;
-  final String text;
-  final String? url; // Optional URL for clickable actions
 
-  const ContactInfo({super.key, required this.icon, required this.text, this.url});
-
-  Future<void> _launchURL() async {
-    if (url != null) {
-      final Uri uri = Uri.parse(url!);
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(uri);
-      } else {
-        // Handle error, e.g., show a SnackBar or print to console
-        print('Could not launch $url');
-      }
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final isClickable = url != null;
-    return GestureDetector(
-        onTap: isClickable ? _launchURL : null,
-        child: MouseRegion( // For web, show pointer cursor
-          cursor: isClickable ? SystemMouseCursors.click : SystemMouseCursors.basic,
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-            decoration: isClickable ? BoxDecoration(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(30),
-            ) : null,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(icon, color: Theme.of(context).colorScheme.onSurface, size: 20),
-                const SizedBox(width: 12),
-                Flexible(
-                  child: Text(text, style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: isClickable ? Theme.of(context).colorScheme.onSurface : null,
-                    fontWeight: isClickable ? FontWeight.w600 : FontWeight.normal,
-                  )),
-                ),
-              ],
-            ),
-          ),
-        )
-    );
-  }
-}
 
 class ExperienceCard extends StatelessWidget {
   final Job job;
@@ -205,46 +156,6 @@ class SkillBar extends StatelessWidget {
   }
 }
 
-class EducationItem extends StatelessWidget {
-  final Education education;
-  const EducationItem({super.key, required this.education});
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    return Card(
-      elevation: 0,
-      color: Colors.transparent, // Transparent to blend with background if needed
-      margin: const EdgeInsets.only(bottom: 16.0),
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-          side: BorderSide(color: Theme.of(context).dividerColor.withOpacity(0.2))
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            CircleAvatar(
-              backgroundColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
-              child: Icon(Icons.school, color: Theme.of(context).colorScheme.onSurface),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(education.degree, style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-                  Text(education.institution, style: textTheme.bodyMedium),
-                ],
-              ),
-            ),
-            Text(education.period, style: textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold, color: Colors.grey)),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class ProjectCard extends StatelessWidget {
   final Project project;

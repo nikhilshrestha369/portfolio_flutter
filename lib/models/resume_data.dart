@@ -43,11 +43,13 @@ class Education {
   final String period;
   final String degree;
   final String institution;
+  final String iamge;
 
   const Education({
     required this.period,
     required this.degree,
     required this.institution,
+    required this.iamge,
   });
 }
 
@@ -210,12 +212,12 @@ final List<Education> educationHistory = [
   Education(
     period: 'Aug 2025 — Present',
     degree: 'MBA with Specialisation in International Business Management',
-    institution: 'Islington College',
+    institution: 'Islington College', iamge: '',
   ),
   Education(
     period: 'Oct 2019 — Dec 2022',
     degree: 'BSc (Hons) Computing',
-    institution: 'Islington College',
+    institution: 'Islington College', iamge: '',
   ),
 ];
 
